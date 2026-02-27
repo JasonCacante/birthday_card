@@ -87,7 +87,7 @@ const App = () => {
   const getApiKey = () => {
     try {
       // Intentamos leer la variable de entorno al estilo Vite
-      return import.meta.env.VITE_GEMINI_API_KEY;
+      return process.env.REACT_APP_GEMINI_API_KEY;
     } catch (e) {
       return "";
     }
