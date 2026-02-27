@@ -83,11 +83,28 @@ const App = () => {
     "https://i.ibb.co/MxRh1nMv/Gemini-Generated-Image-4k2tne4k2tne4k2t.png";
 
   // --- INTEGRACIÓN GEMINI API ---
-  const apiKey = "AIzaSyAgFSB-5Zt2TlKVbPLkjzMGJrSiAuEd9jQ"; // El entorno inyectará la clave aquí
+  // ⚠️ Adaptación para Vite: usamos import.meta.env en lugar de process.env
+  const getApiKey = () => {
+    try {
+      // Intentamos leer la variable de entorno al estilo Vite
+      return import.meta.env.VITE_GEMINI_API_KEY;
+    } catch (e) {
+      return "";
+    }
+  };
+
+  const apiKey = getApiKey();
 
   const fetchAiMission = async () => {
     setIsGenerating(true);
     setAiError(null);
+
+    // Verificación de seguridad antes de intentar la llamada
+    if (!apiKey) {
+      setAiError("Error del Sistema: Llave de acceso YUNG no detectada.");
+      setIsGenerating(false);
+      return;
+    }
 
     const prompt = `Actúa como la inteligencia artificial del sistema "Yung Network". 
     La líder Violeta Osorio C. está celebrando su cumpleaños y acaba de reclutar a su escuadrón de baile K-Pop conformado por: Ana, Susana y Violeta H.
@@ -153,11 +170,7 @@ const App = () => {
       }
     };
 
-    if (apiKey !== undefined && apiKey !== "") {
-      await attemptFetch();
-    } else {
-      setAiError("API Key no configurada para generar la misión.");
-    }
+    await attemptFetch();
     setIsGenerating(false);
   };
 
