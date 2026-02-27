@@ -118,8 +118,9 @@ const App = () => {
 
     const attemptFetch = async (retries = 5, delay = 1000) => {
       try {
+        // Utilizamos el modelo estable público para evitar bloqueos en CodeSandbox
         const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -127,8 +128,7 @@ const App = () => {
           }
         );
 
-        if (!response.ok)
-          throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
         const result = await response.json();
         const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -144,6 +144,7 @@ const App = () => {
           throw new Error("Respuesta vacía de la IA");
         }
       } catch (error) {
+        console.error("Error al conectar con Gemini:", error);
         if (retries > 0) {
           setTimeout(() => attemptFetch(retries - 1, delay * 2), delay);
         } else {
@@ -345,27 +346,57 @@ const App = () => {
         ) : (
           /* PANTALLA DE REVELACIÓN / CELEBRACIÓN CON IA Y COORDENADAS */
           <div className="flex flex-col items-center justify-start py-8 px-6 text-center bg-gradient-to-b from-[#1a051a] to-black min-h-full animate-in fade-in duration-700">
-            {/* Torta y Etiqueta rediseñados y separados */}
-            <div className="mt-8 mb-6 flex flex-col items-center w-full gap-5 relative z-10">
-              <div className="bg-cyan-600 text-[10px] font-black px-5 py-2 rounded-full border border-white shadow-[0_0_15px_rgba(0,255,255,0.5)] uppercase tracking-widest">
-                NIVEL DEBUT
+            {/* Header de Celebración Modernizado */}
+            <div className="mt-8 mb-6 flex flex-col items-center w-full relative z-10">
+              {/* Etiqueta Nivel Debut Ultra-Moderna */}
+              <div className="relative inline-flex mb-6 group">
+                <div className="absolute transition-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#00ffff] via-[#ff00ff] to-[#00ffff] rounded-full blur-md group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-pulse"></div>
+                <div className="relative inline-flex items-center justify-center px-6 py-2 text-[10px] font-black text-white uppercase transition-all duration-200 bg-black border border-white/20 rounded-full tracking-[0.3em]">
+                  <Sparkles size={12} className="text-cyan-400 mr-2" />
+                  NIVEL DEBUT 2026
+                  <Sparkles size={12} className="text-pink-400 ml-2" />
+                </div>
               </div>
-              <Cake size={56} className="text-pink-500 animate-bounce" />
+
+              {/* Torta de Cumpleaños Brillante */}
+              <div className="relative">
+                <div className="absolute inset-0 blur-2xl bg-gradient-to-r from-pink-500 to-cyan-500 opacity-30 rounded-full"></div>
+                <Cake
+                  size={60}
+                  className="text-pink-400 relative z-10 animate-bounce"
+                  style={{
+                    filter: "drop-shadow(0 0 15px rgba(255,0,255,0.8))",
+                  }}
+                />
+              </div>
             </div>
 
-            <h2 className="text-3xl font-black italic tracking-tighter leading-tight uppercase mb-1">
+            {/* Texto de Cumpleaños con Gradiente Metálico */}
+            <h2
+              className="text-4xl font-black italic tracking-tighter leading-none uppercase mb-2 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60"
+              style={{ filter: "drop-shadow(0 0 10px rgba(255,255,255,0.2))" }}
+            >
               ¡FELIZ
               <br />
               <span
-                className="text-cyan-400"
-                style={{ filter: "drop-shadow(0 0 10px #00ffff)" }}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-500"
+                style={{ filter: "drop-shadow(0 0 15px rgba(0,255,255,0.6))" }}
               >
                 CUMPLE!
               </span>
             </h2>
-            <p className="text-[9px] text-pink-400 font-bold tracking-[0.3em] uppercase mb-6">
-              Violeta Osorio C.
-            </p>
+
+            {/* Nombre de la cumpleañera con separadores */}
+            <div className="flex items-center gap-3 mb-8 mt-2">
+              <div className="h-[2px] w-8 bg-gradient-to-r from-transparent to-pink-500 rounded-full"></div>
+              <p
+                className="text-[11px] text-pink-300 font-bold tracking-[0.4em] uppercase"
+                style={{ filter: "drop-shadow(0 0 5px rgba(255,0,255,0.5))" }}
+              >
+                Violeta Osorio C.
+              </p>
+              <div className="h-[2px] w-8 bg-gradient-to-l from-transparent to-pink-500 rounded-full"></div>
+            </div>
 
             <div className="bg-white/5 border border-white/10 p-5 rounded-[2rem] w-full space-y-5 relative overflow-hidden backdrop-blur-xl shadow-2xl mb-6">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50" />
