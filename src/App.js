@@ -108,8 +108,8 @@ const App = () => {
 
     const prompt = `Actúa como la inteligencia artificial del sistema "Yung Network". 
     La líder Violeta Osorio C. está celebrando su cumpleaños y acaba de reclutar a su escuadrón de baile K-Pop conformado por: Ana, Susana y Violeta H.
-    Genera un nombre de grupo de K-Pop épico, moderno y único para ellas (puede mezclar inglés y coreano romanizado). 
-    Luego, escribe una "Misión de Debut" personalizada y emocionante de máximo 2 oraciones para su fiesta de cumpleaños hoy.
+    Genera un nombre de grupo de K-Pop épico, moderno y único para ellas (puede mezclar inglés y coreano romanizado para el nombre). 
+    Luego, escribe una "Misión de Debut" (En español) personalizada y emocionante de máximo 2 oraciones para su fiesta de cumpleaños hoy.
     Devuelve la respuesta estrictamente en el formato JSON solicitado.`;
 
     const payload = {
